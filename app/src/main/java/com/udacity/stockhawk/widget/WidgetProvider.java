@@ -28,27 +28,24 @@ public class WidgetProvider extends AppWidgetProvider {
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         for (int widgetId : appWidgetIds) {
             RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_stock_list);
-
             Intent intent = new Intent(context, MainActivity.class);
             PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
-            remoteViews.setOnClickPendingIntent(R.id.widget, pendingIntent);
+            remoteViews.setOnClickPendingIntent(R.id.widgetLayout, pendingIntent);
 
-            // Set up the collection
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
                 setRemoteAdapter(context, remoteViews);
             } else {
                 setRemoteAdapterV11(context, remoteViews);
             }
 
-            Intent clickIntentTemplate = new Intent(context, DetailActivity.class);
-            clickIntentTemplate.setAction("com.udacity.stockhawk.onClickIntent");
-            PendingIntent pendingIntentTemplate = TaskStackBuilder.create(context)
-                    .addNextIntentWithParentStack(clickIntentTemplate)
+            Intent intent1 = new Intent(context, DetailActivity.class);
+            intent1.setAction("com.udacity.stockhawk.onClickIntent");
+            PendingIntent pendingIntent1 = TaskStackBuilder.create(context)
+                    .addNextIntentWithParentStack(intent1)
                     .getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 
-            remoteViews.setPendingIntentTemplate(R.id.widget_list, pendingIntentTemplate);
-            remoteViews.setEmptyView(R.id.widget_list, R.id.widget_empty);
-            //remoteViews.setInt(R.id.widget_list, "setBackgroundResource", R.color.material_grey);
+            remoteViews.setPendingIntentTemplate(R.id.widget_list, pendingIntent1);
+            remoteViews.setEmptyView(R.id.widget_list, R.id.empty_widget);
             remoteViews.setInt(R.id.widget_content, "setBackgroundResource", R.color.material_grey);
             remoteViews.setContentDescription(R.id.widget_list, context.getString(R.string.widget_description));
             appWidgetManager.updateAppWidget(widgetId, remoteViews);

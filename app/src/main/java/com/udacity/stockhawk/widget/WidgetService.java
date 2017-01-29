@@ -72,21 +72,22 @@ public class WidgetService extends RemoteViewsService {
                 return null;
             }
 
-            RemoteViews remoteViews = new RemoteViews(getPackageName(),
-                    R.layout.list_item_quote);
-
-            String stockSymbol = data.getString(Contract.Quote.POSITION_SYMBOL);
-            Float stockPrice = data.getFloat(Contract.Quote.POSITION_PRICE);
-            Float absoluteChange = data.getFloat(Contract.Quote.POSITION_ABSOLUTE_CHANGE);
             int backgroundDrawable;
+
+            Float stockPrice = data.getFloat(Contract.Quote.POSITION_PRICE);
+            String stockSymbol = data.getString(Contract.Quote.POSITION_SYMBOL);
+            Float absoluteChange = data.getFloat(Contract.Quote.POSITION_ABSOLUTE_CHANGE);
+
+            RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.list_item_quote);
 
             DecimalFormat dollarFormat = (DecimalFormat) NumberFormat.getCurrencyInstance(Locale.US);
             DecimalFormat dollarFormatWithPlus = (DecimalFormat) NumberFormat.getCurrencyInstance(Locale.US);
-            dollarFormatWithPlus.setPositivePrefix("+");
-            dollarFormatWithPlus.setMaximumFractionDigits(2);
-            dollarFormat.setMaximumFractionDigits(2);
             dollarFormat.setMinimumFractionDigits(2);
+            dollarFormat.setMaximumFractionDigits(2);
             dollarFormatWithPlus.setMinimumFractionDigits(2);
+            dollarFormatWithPlus.setMaximumFractionDigits(2);
+            dollarFormatWithPlus.setPositivePrefix("+");
+
 
             if (absoluteChange > 0) {
                 backgroundDrawable = R.drawable.percent_change_pill_green;
@@ -94,11 +95,11 @@ public class WidgetService extends RemoteViewsService {
                 backgroundDrawable = R.drawable.percent_change_pill_red;
             }
 
-            remoteViews.setTextViewText(R.id.symbol, stockSymbol);
             remoteViews.setTextViewText(R.id.price, dollarFormat.format(stockPrice));
+            remoteViews.setTextViewText(R.id.symbol, stockSymbol);
             remoteViews.setTextViewText(R.id.change, dollarFormatWithPlus.format(absoluteChange));
-            remoteViews.setInt(R.id.change, "setBackgroundResource", backgroundDrawable);
             remoteViews.setInt(R.layout.list_item_quote, "setBackgroundResource", R.color.material_grey_850);
+            remoteViews.setInt(R.id.change, "setBackgroundResource", backgroundDrawable);
 
             final Intent fillInIntent = new Intent();
             Uri stockUri = Contract.Quote.makeUriForStock(stockSymbol);
