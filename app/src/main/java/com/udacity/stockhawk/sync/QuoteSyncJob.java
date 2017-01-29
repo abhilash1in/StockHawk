@@ -76,6 +76,23 @@ public final class QuoteSyncJob {
             while (iterator.hasNext()) {
                 final String symbol = iterator.next();
                 Stock stock = quotes.get(symbol);
+
+                if(stock == null){
+                    PrefUtils.removeStock(context,symbol);
+                    Handler handler = new Handler(Looper.getMainLooper());
+                    handler.post(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            Toast.makeText(context,
+                                    context.getString(R.string.text_stock_symbol)
+                                            +symbol+
+                                            context.getString(R.string.text_does_not_exist),
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    continue;
+                }
                 StockQuote quote = stock.getQuote();
                 BigDecimal priceBigInt;
                 priceBigInt = quote.getPrice();
@@ -92,7 +109,9 @@ public final class QuoteSyncJob {
                         @Override
                         public void run() {
                             Toast.makeText(context,
-                                    "Stock symbol "+symbol+" does not exist",
+                                    context.getString(R.string.text_stock_symbol)
+                                            +symbol+
+                                            context.getString(R.string.text_does_not_exist),
                                     Toast.LENGTH_SHORT).show();
                         }
                     });
@@ -128,7 +147,7 @@ public final class QuoteSyncJob {
                             Contract.Quote.URI,
                             quoteCVs.toArray(new ContentValues[quoteCVs.size()]));
 
-            Intent dataUpdatedIntent = new Intent(ACTION_DATA_UPDATED);
+            Intent dataUpdatedIntent = new Intent(context.getString(R.string.text_ACTION_DATA_UPDATED));
             context.sendBroadcast(dataUpdatedIntent);
 
         } catch (IOException exception) {

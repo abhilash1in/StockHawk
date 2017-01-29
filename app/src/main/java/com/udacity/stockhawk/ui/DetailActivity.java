@@ -40,7 +40,7 @@ public class DetailActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         ButterKnife.bind(this);
-        symbol = getIntent().getStringExtra("symbol");
+        symbol = getIntent().getStringExtra(getString(R.string.intent_extra_symbol));
         stockUri = Contract.Quote.makeUriForStock(symbol);
         Cursor cursor = getContentResolver().query(stockUri,new String[]{Contract.Quote.COLUMN_HISTORY}, null,null,null );
         //Log.v("Cursor Object", DatabaseUtils.dumpCursorToString(cursor));
@@ -61,7 +61,7 @@ public class DetailActivity extends AppCompatActivity{
 
             Collections.sort(entries, new EntryXComparator());
 
-            Log.v("Cursor Object",entries.toString());
+            //Log.v("Cursor Object",entries.toString());
 
             LineDataSet dataSet = new LineDataSet(entries, symbol); // add entries to dataset
             dataSet.setColor(Color.RED);

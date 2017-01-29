@@ -4,18 +4,17 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.udacity.stockhawk.R;
 import com.udacity.stockhawk.data.Contract.Quote;
 
 
 class DbHelper extends SQLiteOpenHelper {
 
-
-    private static final String NAME = "StockHawk.db";
     private static final int VERSION = 1;
 
 
     DbHelper(Context context) {
-        super(context, NAME, null, VERSION);
+        super(context, context.getString(R.string.db_name), null, VERSION);
     }
 
     @Override

@@ -21,6 +21,15 @@
     <string name="placeholder_change" translatable="false">100%</string>
 
     <string name="action_change_units" translatable="false">@string/pref_display_mode_key</string>
+    <string name="package_name" translatable="false">com.udacity.stockhawk</string>
+    <string name="widget_intent" translatable="false">com.udacity.stockhawk.onClickIntent</string>
+    <string name="text_setBackgroundResource" translatable="false">setBackgroundResource</string>
+    <string name="text_ACTION_DATA_UPDATED" translatable="false">com.udacity.stockhawk.ACTION_DATA_UPDATED</string>
+    <string name="marker_placeholder" translatable="false">0000.00</string>
+    <string name="db_name" translatable="false">StockHawk.db</string>
+    <string name="table_name" translatable="false">quotes</string>
+    <string name="intent_extra_symbol" translatable="false">symbol</string>
+
 
 
     <string name="dialog_title">Add Stock</string>
@@ -41,4 +50,8 @@
     <string name="change_units_description">Toggle between percentage increase and actual increase</string>
     <string name="listview_widget_description">Stock list in widget.</string>
     <string name="widget_description">Stock hawk widget</string>
+
+
+    <string name="text_stock_symbol">Stock symbol "</string>
+    <string name="text_does_not_exist">" does not exist</string>
 </resources>
